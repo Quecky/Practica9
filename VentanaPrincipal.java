@@ -6,6 +6,8 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+import unam.fi.poo.clases.Usuario;
+
 
 
 @SuppressWarnings("serial")
@@ -17,6 +19,11 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 	private JPanel ventanaCentro;
 	private JPanel ventanaEste;
 	private JPanel ventanaOeste;
+    private JTextField cajaTexton;
+    private JTextField cajaTextoap;
+    private JTextField cajaTextoam;
+    private JTextField cajaTextoe;
+    private JLabel lbien;
 	
 
 	public VentanaPrincipal() {
@@ -83,7 +90,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
         JLabel lapellp = new JLabel("Apellido paterno ");
         JLabel lapellm = new JLabel("Apellido materno ");
         JLabel ledad = new JLabel("Edad ");
-        JLabel lbien = new JLabel("¡Bienvenido al sistema!");
+        lbien = new JLabel("¡Bienvenido al sistema!");
         
         //formato de eleemntos label
         etiqueta.setFont(new Font("Arial",Font.PLAIN,20));
@@ -101,47 +108,76 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
         ledad.setHorizontalAlignment(SwingConstants.RIGHT);
       
         //cajas de texto
-		JTextField cajaTexto = new JTextField();
-        JTextField cajaTexto1 = new JTextField();
-        JTextField cajaTexto2 = new JTextField();
-        JTextField cajaTexto3 = new JTextField();
+        cajaTexton = new JTextField();
+        cajaTextoap = new JTextField();
+        cajaTextoam = new JTextField();
+        cajaTextoe= new JTextField();
         
 
         //botones
 		JButton boton = new JButton("     Cancelar     ");
         JButton botonA = new JButton("     Aceptar     ");
 		JButton botoncito = new JButton("     Borrar     ");
-        
 
-		boton.addActionListener(this);
-	
-    
-   
     
         //agregando componenetes a los paneles
         
 		this.ventanaOeste.add(etiqueta);
         this.ventanaNorte.add(lnombre);
-        this.ventanaNorte.add(cajaTexto);
+        this.ventanaNorte.add(cajaTexton);
         this.ventanaNorte.add(lapellp);
-        this.ventanaNorte.add(cajaTexto1);
+        this.ventanaNorte.add(cajaTextoap);
         this.ventanaNorte.add(lapellm);
-        this.ventanaNorte.add(cajaTexto2);
+        this.ventanaNorte.add(cajaTextoam);
         this.ventanaNorte.add(ledad);
-        this.ventanaNorte.add(cajaTexto3);
+        this.ventanaNorte.add(cajaTextoe);
 		this.ventanaCentro.add(boton);
         this.ventanaCentro.add(botoncito);
         this.ventanaCentro.add(botonA);
         this.ventanaEste.add(lbien);
-     
+        
+        //creando eventos a cada componente
 
 		boton.addActionListener(this);
+        //nombre del evento de boton
+        boton.setActionCommand("Cancelar");
 		botoncito.addActionListener(this);
+        botoncito.setActionCommand("Borrar");
+        botonA.addActionListener(this);
+        botonA.setActionCommand("Aceptar");
 	}
 
 	public void actionPerformed(ActionEvent e)
 	{
-		System.out.println("Evento: "+e.getActionCommand());
+        //validando eventos
+        if(e.getActionCommand().equals("Cancelar"))
+        {
+            System.exit(0);
+        }
+        
+        if(e.getActionCommand().equals("Borrar"))
+        {
+            cajaTexton.setText("");
+            cajaTextoap.setText("");
+            cajaTextoam.setText("");
+            cajaTextoe.setText("");
+            
+        }
+        
+        if(e.getActionCommand().equals("Aceptar"))
+        {
+            Usuario miusuario;
+            miusuario= new Usuario();
+            miusuario.setnombre(cajaTexton.getText());
+            miusuario.setapellidop(cajaTextoap.getText());
+            miusuario.setapellidom(cajaTextoam.getText());
+            int x = Integer.parseInt(cajaTextoe.getText());
+            miusuario.setedad(x);
+            
+            lbien.setText(miusuario.getnombre()+" "+miusuario.getapellidop()+" "+miusuario.getapellidom()+" ("+miusuario.getedad()+")");
+            
+        }
+        
 	}
 
 }
